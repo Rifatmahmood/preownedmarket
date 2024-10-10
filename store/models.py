@@ -20,7 +20,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255)
     price = models.DecimalField(max_digits=4, decimal_places=2)
-    img = models.ImageField()
+    image = models.ImageField(upload_to='products/', default='default.jpg')
     
 
     class Meta:
