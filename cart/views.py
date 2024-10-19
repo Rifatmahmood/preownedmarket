@@ -7,7 +7,8 @@ from django.http import JsonResponse
 
 # Create your views here.
 def cart_summery(request):
-    return render(request, 'cart/cart-summary.html', )
+    cart = Cart(request)
+    return render(request, 'cart/cart-summary.html', {'cart': cart})
 
 def cart_add(request):
     # Stuff with session
@@ -29,7 +30,17 @@ def cart_add(request):
         return response
 
 def cart_delete(request):
-    pass
+    cart = Cart(request)
+    
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+       
+        cart.delete(product_id = product_id)
+        cart_quantity = cart.__len__()
+        cart_total = cart.get_total()
+        response = JsonResponse({'qty': cart_quantity, 'total': cart_total})
+
+    return response
 
 def cart_update(request):
     pass 
