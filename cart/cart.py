@@ -1,5 +1,6 @@
 from store.models import Product
 from decimal import Decimal
+import copy
 
 class Cart():
     def __init__(self, request):
@@ -53,7 +54,7 @@ class Cart():
         products = Product.objects.filter(id__in=all_product_ids)
 
         # Make a copy of the cart to avoid modifying the session data directly
-        cart = self.cart.copy()
+        cart = copy.deepcopy(self.cart)
         
         # Attach actual Product objects to the cart
         for product in products:
